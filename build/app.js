@@ -5671,9 +5671,9 @@ var Web3 = require("web3");
       }
     ],
     "unlinked_binary": "0x606060405260358060106000396000f36503063fc68da550606060405260e060020a600035046396e4ee3d81146024575b6007565b602435600435026060908152602090f3",
-    "updated_at": 1471855187494,
+    "updated_at": 1471868347564,
     "links": {},
-    "address": "0x7df3d65218173d405c3d4620c59679f825afb563"
+    "address": "0x64370be419f4796b2bbfc6e0121e99a22978c368"
   }
 };
 
@@ -6190,11 +6190,11 @@ var Web3 = require("web3");
       }
     ],
     "unlinked_binary": "0x6060604052600160a060020a0332166000908152602081905260409020612710905561018f8061002f6000396000f3606060405260e060020a60003504637bd703e8811461003157806390b98a111461005c578063f8b2cb4f1461008e575b005b6100b4600435600073__ConvertLib____________________________6396e4ee3d6100da84610095565b6100c660043560243533600160a060020a03166000908152602081905260408120548290101561011f57506000610189565b6100b46004355b600160a060020a0381166000908152602081905260409020545b919050565b60408051918252519081900360200190f35b604080519115158252519081900360200190f35b60026040518360e060020a02815260040180838152602001828152602001925050506020604051808303818660325a03f4156100025750506040515191506100af9050565b33600160a060020a0390811660008181526020818152604080832080548890039055938716808352918490208054870190558351868152935191937fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef929081900390910190a35060015b9291505056",
-    "updated_at": 1471855187496,
+    "updated_at": 1471868347566,
     "links": {
-      "ConvertLib": "0x7df3d65218173d405c3d4620c59679f825afb563"
+      "ConvertLib": "0x64370be419f4796b2bbfc6e0121e99a22978c368"
     },
-    "address": "0xe4a797e0bc0bf0fff09fde0b68f73f04aa9a1dfb"
+    "address": "0x8fa268c17484d16a6a31a1934a73df3d610db979"
   }
 };
 
@@ -6682,8 +6682,8 @@ var Web3 = require("web3");
       }
     ],
     "unlinked_binary": "0x606060405260008054600160a060020a03191633179055610130806100246000396000f3606060405260e060020a60003504630900f010811461003c578063445df0ac146100c05780638da5cb5b146100c9578063fdacd576146100db575b005b61003a60043560008054600160a060020a039081163390911614156100bc57604080516001547ffdacd576000000000000000000000000000000000000000000000000000000008252600482015290518392600160a060020a0384169263fdacd5769260248281019392829003018183876161da5a03f115610002575050505b5050565b61010160015481565b610113600054600160a060020a031681565b61003a60043560005433600160a060020a03908116911614156100fe5760018190555b50565b60408051918252519081900360200190f35b60408051600160a060020a03929092168252519081900360200190f3",
-    "updated_at": 1471855187498,
-    "address": "0x5a8e3c26f2286f4495041bb9dcab1bad673b0b73",
+    "updated_at": 1471868347568,
+    "address": "0xf80cba311c996df58c62b49f4c52286bb156b7c6",
     "links": {}
   }
 };
@@ -43551,9 +43551,9 @@ exports.createContext = Script.createContext = function (context) {
 
 },{"indexof":128}],221:[function(require,module,exports){
 module.exports = {
+  "KudosCoin": require("/Users/bart/Repos/Blockchain/Kudos/build/contracts/KudosCoin.sol.js"),
   "ConvertLib": require("/Users/bart/Repos/Blockchain/Kudos/build/contracts/ConvertLib.sol.js"),
   "Migrations": require("/Users/bart/Repos/Blockchain/Kudos/build/contracts/Migrations.sol.js"),
-  "KudosCoin": require("/Users/bart/Repos/Blockchain/Kudos/build/contracts/KudosCoin.sol.js"),
 };
 },{"/Users/bart/Repos/Blockchain/Kudos/build/contracts/ConvertLib.sol.js":1,"/Users/bart/Repos/Blockchain/Kudos/build/contracts/KudosCoin.sol.js":2,"/Users/bart/Repos/Blockchain/Kudos/build/contracts/Migrations.sol.js":3}]},{},[221])(221)
 });
@@ -43586,7 +43586,7 @@ if (typeof web3 !== 'undefined') {
 
                                                               
 
-[KudosCoin,ConvertLib,Migrations].forEach(function(contract) {         
+[ConvertLib,Migrations,KudosCoin].forEach(function(contract) {         
 
   contract.setProvider(window.web3.currentProvider);          
 
@@ -43600,48 +43600,32 @@ var balance;
 var colleagueNames = ["Bart", "Steffie", "Stijn", "Thomas", "Wouter"];
 
 function setStatus(message) {
-  var status = document.getElementById("status");
-  status.innerHTML = message;
+  $('#status').text(message);
 };
 
 function refreshBalance() {
   var meta = KudosCoin.deployed();
 
-  var colleagues = document.getElementById("colleagues");
-  colleagues.innerHTML = "";
-
-  var ul=document.createElement('ul');
-
-  colleagues.appendChild(ul);
+  var colleagues = $('#colleagues');
+  colleagues.empty();
 
   for (var i=0; i<accounts.length; i++){
-
-      var li=document.createElement('li');
+      var currentAccount = accounts[i];
 
       var blockie = blockies.create({ seed: accounts[i]});
-      blockie.addEventListener('click', function() { document.getElementById("receiver").value=event.srcElement.id ; }, false);
-      blockie.id = accounts[i];
+      blockie.addEventListener('click', function() { $('#receiver').val(event.srcElement.id) }, false);
+      blockie.id = currentAccount;
 
-      var colleagueInfo = document.createElement("div");
-      colleagueInfo.innerHTML = colleagueNames[i].bold();
-
-      var kudos = document.createElement("div");
-      
-      var currentAccount = accounts[i];
-      kudos.id = "Kudos" + currentAccount;
+      var colleagueInfo = $('<div>').append($('<b>').text(colleagueNames[i]));
+      var kudos = $('<div>').attr("id","Kudos" + currentAccount);
 
       getBalance(meta, currentAccount);
 
-      ul.appendChild(li);
-      li.appendChild(blockie);
-      li.appendChild(colleagueInfo);
-      li.appendChild(kudos);
-      
+      colleagues.append($('<li>').append(blockie).append(colleagueInfo).append(kudos));
   }
 
   meta.getBalance.call(account, {from: account}).then(function(value) {
-    var balance_element = document.getElementById("balance");
-    balance_element.innerHTML = value.valueOf();
+    $('#balance').text(value.valueOf());
   }).catch(function(e) {
     console.log(e);
     setStatus("Error getting balance; see log.");
@@ -43650,8 +43634,7 @@ function refreshBalance() {
 
 function getBalance(meta, currentAccount) {
   meta.getBalance.call(currentAccount, {from: currentAccount}).then(function(balance) {
-        var currentKudos = document.getElementById("Kudos" + currentAccount);
-        currentKudos.innerHTML = balance.toNumber() + " Kudos";
+        $('#Kudos' + currentAccount).text(balance.toNumber() + " Kudos");
       }).catch(function(e) {
         console.log(e);
       })
@@ -43660,8 +43643,8 @@ function getBalance(meta, currentAccount) {
 function sendCoin() {
   var meta = KudosCoin.deployed();
 
-  var amount = parseInt(document.getElementById("amount").value);
-  var receiver = document.getElementById("receiver").value;
+  var amount = parseInt($('#amount').val());
+  var receiver = $('#receiver').val();
 
   setStatus("Initiating transaction... (please wait)");
 
@@ -43673,8 +43656,8 @@ function sendCoin() {
     setStatus("Error sending coin; see log.");
   });
 
-  document.getElementById("amount").value = "";
-  document.getElementById("receiver").value = "";
+  $('#amount').val("");
+  $('#receiver').val("");
 };
 
 window.onload = function() {
@@ -43695,6 +43678,3 @@ window.onload = function() {
     refreshBalance();
   });
 }
-
-
-!function(){function r(r){for(var t=0;t<l.length;t++)l[t]=0;for(var t=0;t<r.length;t++)l[t%4]=(l[t%4]<<5)-l[t%4]+r.charCodeAt(t)}function t(){var r=l[0]^l[0]<<11;return l[0]=l[1],l[1]=l[2],l[2]=l[3],l[3]=l[3]^l[3]>>19^r^r>>8,(l[3]>>>0)/(1<<31>>>0)}function e(){var r=Math.floor(360*t()),e=60*t()+40+"%",o=25*(t()+t()+t()+t())+"%",n="hsl("+r+","+e+","+o+")";return n}function o(r){for(var e=r,o=r,n=Math.ceil(e/2),a=e-n,l=[],c=0;o>c;c++){for(var f=[],h=0;n>h;h++)f[h]=Math.floor(2.3*t());var i=f.slice(0,a);i.reverse(),f=f.concat(i);for(var v=0;v<f.length;v++)l.push(f[v])}return l}function n(r,t,e,o,n){var a=document.createElement("canvas"),l=Math.sqrt(r.length);a.width=a.height=l*e;var c=a.getContext("2d");c.fillStyle=o,c.fillRect(0,0,a.width,a.height),c.fillStyle=t;for(var f=0;f<r.length;f++){var h=Math.floor(f/l),i=f%l;c.fillStyle=1==r[f]?t:n,r[f]&&c.fillRect(i*e,h*e,e,e)}return a}function a(t){t=t||{};var a=t.size||8,l=t.scale||4,c=t.seed||Math.floor(Math.random()*Math.pow(10,16)).toString(16);r(c);var f=t.color||e(),h=t.bgcolor||e(),i=t.spotcolor||e(),v=o(a),u=n(v,f,l,h,i);return u}var l=new Array(4);window.blockies={create:a}}();

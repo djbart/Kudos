@@ -1,10 +1,9 @@
 module.exports = {
   build: {
     "index.html": "index.html",
-    "app.js": [
-      "javascripts/app.js",
-      "javascripts/blockies.js"
-    ],
+    "jquery-3.1.0.min.js": "javascripts/jquery-3.1.0.min.js",
+    "blockies.js": "javascripts/blockies.js",
+    "app.js": "javascripts/app.js",
     "app.css": [
       "stylesheets/app.css"
     ],

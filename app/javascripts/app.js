@@ -4,48 +4,32 @@ var balance;
 var colleagueNames = ["Bart", "Steffie", "Stijn", "Thomas", "Wouter"];
 
 function setStatus(message) {
-  var status = document.getElementById("status");
-  status.innerHTML = message;
+  $('#status').text(message);
 };
 
 function refreshBalance() {
   var meta = KudosCoin.deployed();
 
-  var colleagues = document.getElementById("colleagues");
-  colleagues.innerHTML = "";
-
-  var ul=document.createElement('ul');
-
-  colleagues.appendChild(ul);
+  var colleagues = $('#colleagues');
+  colleagues.empty();
 
   for (var i=0; i<accounts.length; i++){
-
-      var li=document.createElement('li');
+      var currentAccount = accounts[i];
 
       var blockie = blockies.create({ seed: accounts[i]});
-      blockie.addEventListener('click', function() { document.getElementById("receiver").value=event.srcElement.id ; }, false);
-      blockie.id = accounts[i];
+      blockie.addEventListener('click', function() { $('#receiver').val(event.srcElement.id) }, false);
+      blockie.id = currentAccount;
 
-      var colleagueInfo = document.createElement("div");
-      colleagueInfo.innerHTML = colleagueNames[i].bold();
-
-      var kudos = document.createElement("div");
-      
-      var currentAccount = accounts[i];
-      kudos.id = "Kudos" + currentAccount;
+      var colleagueInfo = $('<div>').append($('<b>').text(colleagueNames[i]));
+      var kudos = $('<div>').attr("id","Kudos" + currentAccount);
 
       getBalance(meta, currentAccount);
 
-      ul.appendChild(li);
-      li.appendChild(blockie);
-      li.appendChild(colleagueInfo);
-      li.appendChild(kudos);
-      
+      colleagues.append($('<li>').append(blockie).append(colleagueInfo).append(kudos));
   }
 
   meta.getBalance.call(account, {from: account}).then(function(value) {
-    var balance_element = document.getElementById("balance");
-    balance_element.innerHTML = value.valueOf();
+    $('#balance').text(value.valueOf());
   }).catch(function(e) {
     console.log(e);
     setStatus("Error getting balance; see log.");
@@ -54,8 +38,7 @@ function refreshBalance() {
 
 function getBalance(meta, currentAccount) {
   meta.getBalance.call(currentAccount, {from: currentAccount}).then(function(balance) {
-        var currentKudos = document.getElementById("Kudos" + currentAccount);
-        currentKudos.innerHTML = balance.toNumber() + " Kudos";
+        $('#Kudos' + currentAccount).text(balance.toNumber() + " Kudos");
       }).catch(function(e) {
         console.log(e);
       })
@@ -64,8 +47,8 @@ function getBalance(meta, currentAccount) {
 function sendCoin() {
   var meta = KudosCoin.deployed();
 
-  var amount = parseInt(document.getElementById("amount").value);
-  var receiver = document.getElementById("receiver").value;
+  var amount = parseInt($('#amount').val());
+  var receiver = $('#receiver').val();
 
   setStatus("Initiating transaction... (please wait)");
 
@@ -77,8 +60,8 @@ function sendCoin() {
     setStatus("Error sending coin; see log.");
   });
 
-  document.getElementById("amount").value = "";
-  document.getElementById("receiver").value = "";
+  $('#amount').val("");
+  $('#receiver').val("");
 };
 
 window.onload = function() {
