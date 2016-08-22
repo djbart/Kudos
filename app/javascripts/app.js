@@ -1,6 +1,7 @@
 var accounts;
 var account;
 var balance;
+var colleagueNames = ["Bart", "Steffie", "Stijn", "Thomas", "Wouter"];
 
 function setStatus(message) {
   var status = document.getElementById("status");
@@ -10,6 +11,31 @@ function setStatus(message) {
 function refreshBalance() {
   var meta = KudosCoin.deployed();
 
+  var colleagues = document.getElementById("colleagues");
+
+  var ul=document.createElement('ul');
+
+  colleagues.appendChild(ul);
+
+  for (var i=0; i<accounts.length; i++){
+
+      var li=document.createElement('li');
+      var blockie = blockies.create({ seed: accounts[i]});
+      var colleagueInfo = document.createElement("p");
+      var kudos = document.createElement("p");
+      colleagueInfo.innerHTML = colleagueNames[i] + " <small>(" + accounts[i] + ")</small>";
+      var currentAccount = accounts[i];
+      kudos.id = "Kudos" + currentAccount;
+
+      getBalance(meta, currentAccount);
+
+      ul.appendChild(li);
+      li.appendChild(blockie);
+      li.appendChild(colleagueInfo);
+      li.appendChild(kudos);
+      
+  }
+
   meta.getBalance.call(account, {from: account}).then(function(value) {
     var balance_element = document.getElementById("balance");
     balance_element.innerHTML = value.valueOf();
@@ -17,6 +43,15 @@ function refreshBalance() {
     console.log(e);
     setStatus("Error getting balance; see log.");
   });
+};
+
+function getBalance(meta, currentAccount) {
+  meta.getBalance.call(currentAccount, {from: currentAccount}).then(function(balance) {
+        var currentKudos = document.getElementById("Kudos" + currentAccount);
+        currentKudos.innerHTML = "Kudos: " + balance.toNumber();
+      }).catch(function(e) {
+        console.log(e);
+      })
 };
 
 function sendCoin() {
