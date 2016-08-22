@@ -1,4 +1,4 @@
-# Kudos demo app
+# Kudos demo app on Ethereum
 
 ## Prerequisites
 
