@@ -76,6 +76,9 @@ function sendCoin() {
     console.log(e);
     setStatus("Error sending coin; see log.");
   });
+
+  document.getElementById("amount").value = "";
+  document.getElementById("receiver").value = "";
 };
 
 window.onload = function() {

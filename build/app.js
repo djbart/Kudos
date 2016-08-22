@@ -43551,8 +43551,8 @@ exports.createContext = Script.createContext = function (context) {
 
 },{"indexof":128}],221:[function(require,module,exports){
 module.exports = {
-  "Migrations": require("/Users/bart/Repos/Blockchain/Kudos/build/contracts/Migrations.sol.js"),
   "ConvertLib": require("/Users/bart/Repos/Blockchain/Kudos/build/contracts/ConvertLib.sol.js"),
+  "Migrations": require("/Users/bart/Repos/Blockchain/Kudos/build/contracts/Migrations.sol.js"),
   "KudosCoin": require("/Users/bart/Repos/Blockchain/Kudos/build/contracts/KudosCoin.sol.js"),
 };
 },{"/Users/bart/Repos/Blockchain/Kudos/build/contracts/ConvertLib.sol.js":1,"/Users/bart/Repos/Blockchain/Kudos/build/contracts/KudosCoin.sol.js":2,"/Users/bart/Repos/Blockchain/Kudos/build/contracts/Migrations.sol.js":3}]},{},[221])(221)
@@ -43586,7 +43586,7 @@ if (typeof web3 !== 'undefined') {
 
                                                               
 
-[ConvertLib,KudosCoin,Migrations].forEach(function(contract) {         
+[KudosCoin,ConvertLib,Migrations].forEach(function(contract) {         
 
   contract.setProvider(window.web3.currentProvider);          
 
@@ -43672,6 +43672,9 @@ function sendCoin() {
     console.log(e);
     setStatus("Error sending coin; see log.");
   });
+
+  document.getElementById("amount").value = "";
+  document.getElementById("receiver").value = "";
 };
 
 window.onload = function() {
