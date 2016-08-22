@@ -1,10 +1,14 @@
 
 
 body {
-  margin-left: 25%;
-  margin-right: 25%;
-  margin-top: 10%;
+  margin: 0;
   font-family: "Open Sans", sans-serif;
+  max-width: 700px;
+}
+
+div {
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 label {
@@ -13,7 +17,7 @@ label {
 }
 
 input {
-  width: 500px;
+  width: 100%;
   padding: 5px;
   font-size: 16px;
 }

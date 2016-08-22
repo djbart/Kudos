@@ -43551,8 +43551,8 @@ exports.createContext = Script.createContext = function (context) {
 
 },{"indexof":128}],221:[function(require,module,exports){
 module.exports = {
-  "KudosCoin": require("/Users/bart/Repos/Blockchain/Kudos/build/contracts/KudosCoin.sol.js"),
   "ConvertLib": require("/Users/bart/Repos/Blockchain/Kudos/build/contracts/ConvertLib.sol.js"),
+  "KudosCoin": require("/Users/bart/Repos/Blockchain/Kudos/build/contracts/KudosCoin.sol.js"),
   "Migrations": require("/Users/bart/Repos/Blockchain/Kudos/build/contracts/Migrations.sol.js"),
 };
 },{"/Users/bart/Repos/Blockchain/Kudos/build/contracts/ConvertLib.sol.js":1,"/Users/bart/Repos/Blockchain/Kudos/build/contracts/KudosCoin.sol.js":2,"/Users/bart/Repos/Blockchain/Kudos/build/contracts/Migrations.sol.js":3}]},{},[221])(221)
@@ -43586,7 +43586,7 @@ if (typeof web3 !== 'undefined') {
 
                                                               
 
-[ConvertLib,Migrations,KudosCoin].forEach(function(contract) {         
+[ConvertLib,KudosCoin,Migrations].forEach(function(contract) {         
 
   contract.setProvider(window.web3.currentProvider);          
 
@@ -43616,12 +43616,12 @@ function refreshBalance() {
       blockie.addEventListener('click', function() { $('#receiver').val(event.srcElement.id) }, false);
       blockie.id = currentAccount;
 
-      var colleagueInfo = $('<div>').append($('<b>').text(colleagueNames[i]));
-      var kudos = $('<div>').attr("id","Kudos" + currentAccount);
+      var colleagueInfo = $('<td>').append($('<b>').text(colleagueNames[i]));
+      var kudos = $('<td>').attr("id","Kudos" + currentAccount);
 
       getBalance(meta, currentAccount);
 
-      colleagues.append($('<li>').append(blockie).append(colleagueInfo).append(kudos));
+      colleagues.append($('<tr>').append($('<td>').add(blockie)).append(colleagueInfo).append(kudos));
   }
 
   meta.getBalance.call(account, {from: account}).then(function(value) {
