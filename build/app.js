@@ -5671,9 +5671,9 @@ var Web3 = require("web3");
       }
     ],
     "unlinked_binary": "0x606060405260358060106000396000f36503063fc68da550606060405260e060020a600035046396e4ee3d81146024575b6007565b602435600435026060908152602090f3",
-    "updated_at": 1471854916070,
+    "updated_at": 1471855187494,
     "links": {},
-    "address": "0x1c8f96d8e2e81aac4b78326d7a094e54f0879f90"
+    "address": "0x7df3d65218173d405c3d4620c59679f825afb563"
   }
 };
 
@@ -6190,11 +6190,11 @@ var Web3 = require("web3");
       }
     ],
     "unlinked_binary": "0x6060604052600160a060020a0332166000908152602081905260409020612710905561018f8061002f6000396000f3606060405260e060020a60003504637bd703e8811461003157806390b98a111461005c578063f8b2cb4f1461008e575b005b6100b4600435600073__ConvertLib____________________________6396e4ee3d6100da84610095565b6100c660043560243533600160a060020a03166000908152602081905260408120548290101561011f57506000610189565b6100b46004355b600160a060020a0381166000908152602081905260409020545b919050565b60408051918252519081900360200190f35b604080519115158252519081900360200190f35b60026040518360e060020a02815260040180838152602001828152602001925050506020604051808303818660325a03f4156100025750506040515191506100af9050565b33600160a060020a0390811660008181526020818152604080832080548890039055938716808352918490208054870190558351868152935191937fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef929081900390910190a35060015b9291505056",
-    "updated_at": 1471854916074,
+    "updated_at": 1471855187496,
     "links": {
-      "ConvertLib": "0x1c8f96d8e2e81aac4b78326d7a094e54f0879f90"
+      "ConvertLib": "0x7df3d65218173d405c3d4620c59679f825afb563"
     },
-    "address": "0x0441dabb051c9927852ecbcd9a8b40fd00b5e4a1"
+    "address": "0xe4a797e0bc0bf0fff09fde0b68f73f04aa9a1dfb"
   }
 };
 
@@ -6682,8 +6682,8 @@ var Web3 = require("web3");
       }
     ],
     "unlinked_binary": "0x606060405260008054600160a060020a03191633179055610130806100246000396000f3606060405260e060020a60003504630900f010811461003c578063445df0ac146100c05780638da5cb5b146100c9578063fdacd576146100db575b005b61003a60043560008054600160a060020a039081163390911614156100bc57604080516001547ffdacd576000000000000000000000000000000000000000000000000000000008252600482015290518392600160a060020a0384169263fdacd5769260248281019392829003018183876161da5a03f115610002575050505b5050565b61010160015481565b610113600054600160a060020a031681565b61003a60043560005433600160a060020a03908116911614156100fe5760018190555b50565b60408051918252519081900360200190f35b60408051600160a060020a03929092168252519081900360200190f3",
-    "updated_at": 1471854916076,
-    "address": "0x172b44708b1937c933f9285e9b04744d9149883f",
+    "updated_at": 1471855187498,
+    "address": "0x5a8e3c26f2286f4495041bb9dcab1bad673b0b73",
     "links": {}
   }
 };
@@ -43551,9 +43551,9 @@ exports.createContext = Script.createContext = function (context) {
 
 },{"indexof":128}],221:[function(require,module,exports){
 module.exports = {
+  "Migrations": require("/Users/bart/Repos/Blockchain/Kudos/build/contracts/Migrations.sol.js"),
   "ConvertLib": require("/Users/bart/Repos/Blockchain/Kudos/build/contracts/ConvertLib.sol.js"),
   "KudosCoin": require("/Users/bart/Repos/Blockchain/Kudos/build/contracts/KudosCoin.sol.js"),
-  "Migrations": require("/Users/bart/Repos/Blockchain/Kudos/build/contracts/Migrations.sol.js"),
 };
 },{"/Users/bart/Repos/Blockchain/Kudos/build/contracts/ConvertLib.sol.js":1,"/Users/bart/Repos/Blockchain/Kudos/build/contracts/KudosCoin.sol.js":2,"/Users/bart/Repos/Blockchain/Kudos/build/contracts/Migrations.sol.js":3}]},{},[221])(221)
 });
@@ -43608,6 +43608,7 @@ function refreshBalance() {
   var meta = KudosCoin.deployed();
 
   var colleagues = document.getElementById("colleagues");
+  colleagues.innerHTML = "";
 
   var ul=document.createElement('ul');
 
@@ -43616,10 +43617,16 @@ function refreshBalance() {
   for (var i=0; i<accounts.length; i++){
 
       var li=document.createElement('li');
+
       var blockie = blockies.create({ seed: accounts[i]});
-      var colleagueInfo = document.createElement("p");
-      var kudos = document.createElement("p");
-      colleagueInfo.innerHTML = colleagueNames[i] + " <small>(" + accounts[i] + ")</small>";
+      blockie.addEventListener('click', function() { document.getElementById("receiver").value=event.srcElement.id ; }, false);
+      blockie.id = accounts[i];
+
+      var colleagueInfo = document.createElement("div");
+      colleagueInfo.innerHTML = colleagueNames[i].bold();
+
+      var kudos = document.createElement("div");
+      
       var currentAccount = accounts[i];
       kudos.id = "Kudos" + currentAccount;
 
@@ -43644,7 +43651,7 @@ function refreshBalance() {
 function getBalance(meta, currentAccount) {
   meta.getBalance.call(currentAccount, {from: currentAccount}).then(function(balance) {
         var currentKudos = document.getElementById("Kudos" + currentAccount);
-        currentKudos.innerHTML = "Kudos: " + balance.toNumber();
+        currentKudos.innerHTML = balance.toNumber() + " Kudos";
       }).catch(function(e) {
         console.log(e);
       })

@@ -12,6 +12,7 @@ function refreshBalance() {
   var meta = KudosCoin.deployed();
 
   var colleagues = document.getElementById("colleagues");
+  colleagues.innerHTML = "";
 
   var ul=document.createElement('ul');
 
@@ -20,10 +21,16 @@ function refreshBalance() {
   for (var i=0; i<accounts.length; i++){
 
       var li=document.createElement('li');
+
       var blockie = blockies.create({ seed: accounts[i]});
-      var colleagueInfo = document.createElement("p");
-      var kudos = document.createElement("p");
-      colleagueInfo.innerHTML = colleagueNames[i] + " <small>(" + accounts[i] + ")</small>";
+      blockie.addEventListener('click', function() { document.getElementById("receiver").value=event.srcElement.id ; }, false);
+      blockie.id = accounts[i];
+
+      var colleagueInfo = document.createElement("div");
+      colleagueInfo.innerHTML = colleagueNames[i].bold();
+
+      var kudos = document.createElement("div");
+      
       var currentAccount = accounts[i];
       kudos.id = "Kudos" + currentAccount;
 
@@ -48,7 +55,7 @@ function refreshBalance() {
 function getBalance(meta, currentAccount) {
   meta.getBalance.call(currentAccount, {from: currentAccount}).then(function(balance) {
         var currentKudos = document.getElementById("Kudos" + currentAccount);
-        currentKudos.innerHTML = "Kudos: " + balance.toNumber();
+        currentKudos.innerHTML = balance.toNumber() + " Kudos";
       }).catch(function(e) {
         console.log(e);
       })
