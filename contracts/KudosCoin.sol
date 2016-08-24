@@ -1,5 +1,3 @@
-import "ConvertLib.sol";
-
 contract KudosCoin {
 	mapping (address => uint) balances;
 
@@ -15,10 +13,6 @@ contract KudosCoin {
 		balances[receiver] += amount;
 		Transfer(msg.sender, receiver, amount);
 		return true;
-	}
-
-	function getBalanceInEth(address addr) returns(uint){
-		return ConvertLib.convert(getBalance(addr),2);
 	}
 
 	function getBalance(address addr) returns(uint) {
